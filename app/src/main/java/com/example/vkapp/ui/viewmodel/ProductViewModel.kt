@@ -31,7 +31,9 @@ class ProductViewModel : ViewModel() {
         viewModelScope.launch{
             _state.value = ProductViewState.Loading
             try{
-                val response = productApi.getProducts()
+                currentSkip+=10
+                currentLimit+=10
+                val response = productApi.getProducts(currentLimit,currentLimit)
                 _state.value = ProductViewState.Success(response.body()!!)
                 Log.i("Response",state.value.toString() )
             } catch (e: Exception){

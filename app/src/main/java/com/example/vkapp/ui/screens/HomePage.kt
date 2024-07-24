@@ -1,9 +1,11 @@
     package com.example.vkapp.ui.screens
 
     import androidx.compose.foundation.layout.Arrangement
+    import androidx.compose.foundation.layout.Box
     import androidx.compose.foundation.layout.Column
     import androidx.compose.foundation.layout.Row
     import androidx.compose.foundation.layout.fillMaxSize
+    import androidx.compose.foundation.layout.fillMaxWidth
     import androidx.compose.foundation.layout.padding
     import androidx.compose.material3.Button
     import androidx.compose.material3.CircularProgressIndicator
@@ -24,31 +26,40 @@
         Column(modifier = Modifier
             .fillMaxSize()
             .padding(15.dp),
-            Arrangement.Bottom,
-            Alignment.CenterHorizontally
+            verticalArrangement = Arrangement.SpaceBetween,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            /*Button(onClick = {
+                productViewModel.processIntent(ProductViewIntent.LoadNextPage)
+            }) {
+                Text(text = "CLICK")
+            }*/
+            /*Row(
+                modifier = Modifier.fillMaxSize(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            )*/ Box(
+            modifier = Modifier.weight(1f).fillMaxWidth(),
+            contentAlignment = Alignment.Center
+            ){
+                when (state) {
+                    is ProductViewState.Loading -> CircularProgressIndicator()
+                    is ProductViewState.Success -> {
+                        val products = (state as ProductViewState.Success).products
+                        SuccessComponents(products)
+                    }
+
+                    is ProductViewState.Error -> {
+                        val message = (state as ProductViewState.Error).message
+                        Text(text = "Error: $message")
+                        /// Что-то дописать
+                    }
+                }
+            }
             Button(onClick = {
                 productViewModel.processIntent(ProductViewIntent.LoadNextPage)
             }) {
                 Text(text = "CLICK")
-            }
-        }
-        Row(modifier = Modifier.fillMaxSize(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
-        ){
-            when (state) {
-                is ProductViewState.Loading -> CircularProgressIndicator()
-                is ProductViewState.Success -> {
-                    val products = (state as ProductViewState.Success).products
-                    SuccessComponents(products)
-                }
-
-                is ProductViewState.Error -> {
-                    val message = (state as ProductViewState.Error).message
-                    Text(text = "Error: $message")
-                    /// Что-то дописать
-                }
             }
         }
     }

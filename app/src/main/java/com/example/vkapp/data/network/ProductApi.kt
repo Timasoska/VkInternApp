@@ -7,8 +7,9 @@ import retrofit2.http.Query
 
 interface ProductApi {
 
-    @GET("products?limit=20&skip=10&select=title,description,thumbnail")//skip отвечает за количество пропущенных продуктов
+    @GET("products")//skip отвечает за количество пропущенных продуктов
     suspend fun getProducts(
-        //@Query("") products : String,
+        @Query("limit")limit: Int,
+        @Query("skip")skip: Int
     ) : Response<ProductModel>
 }
