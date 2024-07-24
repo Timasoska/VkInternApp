@@ -40,17 +40,15 @@
             when (state) {
                 is ProductViewState.Loading -> CircularProgressIndicator()
                 is ProductViewState.Success -> {
-                    //val products = (state as ProductViewState.Success).products
-                    state as ProductViewState.Success //Дописать
-                    SuccessComponents()
+                    val products = (state as ProductViewState.Success).products
+                    SuccessComponents(products)
                 }
 
                 is ProductViewState.Error -> {
                     val message = (state as ProductViewState.Error).message
-                    Text(text = "Error")
+                    Text(text = "Error: $message")
                     /// Что-то дописать
                 }
-                null -> {}
             }
         }
     }
