@@ -13,6 +13,8 @@ class ProductViewModel : ViewModel() {
     private val _state = mutableStateOf<ProductViewState>(ProductViewState.Loading)
     val state: State<ProductViewState> = _state
     val productApi = RetrofitInstance.productApi
+    private var currentLimit = 0
+    private var currentSkip = 0
 
     init {
         // Загрузка данных при инициализации ViewModel
